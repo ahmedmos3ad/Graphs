@@ -42,7 +42,8 @@ public class Prims
                 this.adjacencyMatrix[source][destination] = adjacencyMatrix[source][destination];
             }
         }
- 
+        
+        
         for (int index = 1; index <= numberofvertices; index++)
         {
             key[index] = INFINITE;
@@ -97,14 +98,28 @@ public class Prims
  
     public void printMST(int source)
     {
-        System.out.println("SOURCE  : DESTINATION   =    WEIGHT");
-        for (int vertex = 1; vertex <= numberofvertices; vertex++)
+    	int count=0;
+    	System.out.println("SOURCE  : DESTINATION   =    WEIGHT");
+        for (int x=1; x<=numberofvertices; x++)
         {
-            if(parent[vertex]==source)
+        	for (int vertex = 1; vertex <= numberofvertices; vertex++)
+        	{
+            if(parent[x]==source)
             	//https://www.cs.usfca.edu/~galles/visualization/Prim.html
             	//if u replace parent[vertex] with the source vertex u want without the above if condition (printing from source to every vertex
             	//it will print INF (wrong value) for the other destinations the if condition is holding back	
-            	System.out.println(parent[vertex] + "\t:\t" + vertex +"\t=\t"+ adjacencyMatrix[parent[vertex]][vertex]);
+            	if (adjacencyMatrix[parent[x]][vertex]==Integer.MAX_VALUE)
+            	{
+            		System.out.println(parent[x] + "\t:\t" + vertex +"\t=\t"+ "INF");
+            		count++;
+            	}
+            	else {
+            		System.out.println(parent[x] + "\t:\t" + vertex +"\t=\t"+ adjacencyMatrix[parent[x]][vertex]);
+            		count++;
+            	}
+        	}
+       if(count==numberofvertices)
+    	   break;
         }
-    }
+   }
 }

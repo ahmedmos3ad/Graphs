@@ -6,7 +6,7 @@ public class Main {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		int adjacency_matrix[][];
-	    int number_of_vertices;
+		int number_of_vertices;
 	    int source = 0;
 	    Scanner scan = new Scanner(System.in);
 	    char ch;
@@ -22,7 +22,7 @@ public class Main {
 	       try
 	        {
 	            System.out.println("Enter the number of vertices");
-	            number_of_vertices = scan.nextInt();
+	            number_of_vertices = scan.nextInt();	
 	            adjacency_matrix = new int[number_of_vertices + 1][number_of_vertices + 1];
 	 
 	            System.out.println("Enter the Weighted Matrix for the graph");
