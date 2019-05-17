@@ -25,8 +25,8 @@ public class Main {
 	            number_of_vertices = scan.nextInt();	
 	            adjacency_matrix = new int[number_of_vertices + 1][number_of_vertices + 1];
 	 
-	            System.out.println("Enter the Weighted Matrix for the graph");
-	            for (int i = 1; i <= number_of_vertices; i++)
+	            //System.out.println("Enter the Weighted Matrix for the graph");
+	            /*for (int i = 1; i <= number_of_vertices; i++)
 	            {
 	            	System.out.println("Enter ROW Number "+i+" of the Matrix ("+number_of_vertices+" inputs)");
 	            	for (int j = 1; j <= number_of_vertices; j++)
@@ -42,13 +42,21 @@ public class Main {
 	                        adjacency_matrix[i][j] = Integer.MAX_VALUE;
 	                    }
 	                }
-	            }
-	 
-	            Prims prims = new Prims(number_of_vertices);
-	            prims.primsAlgorithm(adjacency_matrix);
+	            }*/
+	            int graph[][] = new int[][] {{0, 6, 0, 0, 0, 0, 0, 0}, 
+                    						 {6, 0, 0, 8, 0, 5, 2, 0}, 
+                                             {0, 0, 0, 0, 5, 0, 1, 0}, 
+                                             {0, 8, 0, 0, 0, 0, 0, 2}, 
+                                             {0, 0, 5, 0, 0, 0, 7, 0},
+                                             {0, 5, 0, 0, 0, 0, 5, 1},
+                                             {0, 2, 1, 0, 7, 5, 0, 0},
+                                             {0, 0, 0, 2, 0, 1, 0, 0}}; 
+
 	            System.out.println("Enter the source ");
 	            source = scan.nextInt();
-	            prims.printMST(source);
+	            Prims prims = new Prims(number_of_vertices,source);
+	            prims.primMST(graph);
+	            prims.printMST(graph);
 	 
 	        } catch (InputMismatchException inputMismatch)
 	        	{

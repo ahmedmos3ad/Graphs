@@ -1,123 +1,62 @@
 
-public class Prims
-{
-    private boolean unsettled[];
-    private boolean settled[];
-    private int numberofvertices;
-    private int adjacencyMatrix[][];
-    private int key[];
-    public static final int INFINITE = Integer.MAX_VALUE;
-    private int parent[];
- 
-    public Prims(int numberofvertices)
-    {
-        this.numberofvertices = numberofvertices;
-        unsettled = new boolean[numberofvertices + 1];
-        settled = new boolean[numberofvertices + 1];
-        adjacencyMatrix = new int[numberofvertices + 1][numberofvertices + 1];
-        key = new int[numberofvertices + 1];
-        parent = new int[numberofvertices + 1];
+
+public class Prims {
+
+    public boolean mstSet[];
+    public int parent[];
+    public int key[];
+    public int size;
+
+    Prims(int V, int source) {
+        size = V;
+        mstSet = new boolean[size];
+        parent = new int[size];
+        key = new int[size];
+        for (int i = 0; i < size; i++) {   //Intialize all keys to INFINITE
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+        key[source] = 0;
+        parent[source] = -1;
     }
- 
-    public int getUnsettledCount(boolean unsettled[])
-    {
-        int count = 0;
-        for (int index = 0; index < unsettled.length; index++)
-        {
-            if (unsettled[index])
-            {
-                count++;
-            }
-        }
-        return count;
-    }
- 
-    public void primsAlgorithm(int adjacencyMatrix[][])
-    {
-        int evaluationVertex;
-        for (int source = 1; source <= numberofvertices; source++)
-        {
-            for (int destination = 1; destination <= numberofvertices; destination++)
-            {
-                this.adjacencyMatrix[source][destination] = adjacencyMatrix[source][destination];
-            }
-        }
-        
-        
-        for (int index = 1; index <= numberofvertices; index++)
-        {
-            key[index] = INFINITE;
-        }
-        key[1] = 0;
-        unsettled[1] = true;
-        parent[1] = 1;
- 
-        while (getUnsettledCount(unsettled) != 0)
-        {
-            evaluationVertex = getMimumKeyVertexFromUnsettled(unsettled);
-            unsettled[evaluationVertex] = false;
-            settled[evaluationVertex] = true;
-            evaluateNeighbours(evaluationVertex);
-        }
-    } 
- 
-    private int getMimumKeyVertexFromUnsettled(boolean[] unsettled2)
-    {
-        int min = Integer.MAX_VALUE;
-        int node = 0;
-        for (int vertex = 1; vertex <= numberofvertices; vertex++)
-        {
-            if (unsettled[vertex] == true && key[vertex] < min)
-            {
-                node = vertex;
-                min = key[vertex];
-            }
-        }
-        return node;
-    }
- 
-    public void evaluateNeighbours(int evaluationVertex)
-    {
- 
-        for (int destinationvertex = 1; destinationvertex <= numberofvertices; destinationvertex++)
-        {
-            if (settled[destinationvertex] == false)
-            {
-                if (adjacencyMatrix[evaluationVertex][destinationvertex] != INFINITE)
-                {
-                    if (adjacencyMatrix[evaluationVertex][destinationvertex] < key[destinationvertex])
-                    {
-                        key[destinationvertex] = adjacencyMatrix[evaluationVertex][destinationvertex];
-                        parent[destinationvertex] = evaluationVertex;
-                    }
-                    unsettled[destinationvertex] = true;
+
+    public void primMST(int graph[][]) {
+        for (int i = 0; i < size - 1; i++) {
+            int z = minKey(key, mstSet);
+            mstSet[z] = true;
+
+            for (int j = 0; j < size; j++) {
+                if (graph[z][j] != 0 && mstSet[j] == false && graph[z][j] < key[j]) {
+                    parent[j] = z;
+                    key[j] = graph[z][j];
                 }
             }
         }
+
     }
- 
-    public void printMST(int source)
-    {
-    	int count=0;
-    	System.out.println("SOURCE  : DESTINATION   =    WEIGHT");
-        for (int x=1; x<=numberofvertices; x++)
-        {
-        	for (int vertex = 1; vertex <= numberofvertices; vertex++)
-        	{
-            if(x==source)
-            	//https://www.cs.usfca.edu/~galles/visualization/Prim.html
-            	if (adjacencyMatrix[x][vertex]==Integer.MAX_VALUE)
-            	{
-            		System.out.println(x + "\t:\t" + vertex +"\t=\t"+ "INF");
-            		count++;
-            	}
-            	else {
-            		System.out.println(x + "\t:\t" + vertex +"\t=\t"+ adjacencyMatrix[x][vertex]);
-            		count++;
-            	}
-        	}
-       if(count==numberofvertices)
-    	   break;
+
+    public int minKey(int key[], boolean mstSet[]) {
+        int min = Integer.MAX_VALUE;
+        int xMin = -1;
+
+        for (int i = 0; i < size; i++) {
+            if (mstSet[i] == false && key[i] < min) {
+                min = key[i];
+                xMin = i;
+            }
         }
-   }
+        return xMin;
+    }
+
+    public void printMST(int graph[][]) {
+        System.out.println("Edge \tWeight");
+        for (int i = 0; i < size; i++) {
+            if (parent[i] == -1) {
+                System.out.println(i + " -(" + parent[i] + ")\t" + "0");
+                continue;
+            }
+            System.out.println(i + " - " + parent[i] + "\t" + graph[i][parent[i]]);
+        }
+    }
+
 }
