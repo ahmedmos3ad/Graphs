@@ -104,17 +104,15 @@ public class Prims
         {
         	for (int vertex = 1; vertex <= numberofvertices; vertex++)
         	{
-            if(parent[x]==source)
+            if(x==source)
             	//https://www.cs.usfca.edu/~galles/visualization/Prim.html
-            	//if u replace parent[vertex] with the source vertex u want without the above if condition (printing from source to every vertex
-            	//it will print INF (wrong value) for the other destinations the if condition is holding back	
-            	if (adjacencyMatrix[parent[x]][vertex]==Integer.MAX_VALUE)
+            	if (adjacencyMatrix[x][vertex]==Integer.MAX_VALUE)
             	{
-            		System.out.println(parent[x] + "\t:\t" + vertex +"\t=\t"+ "INF");
+            		System.out.println(x + "\t:\t" + vertex +"\t=\t"+ "INF");
             		count++;
             	}
             	else {
-            		System.out.println(parent[x] + "\t:\t" + vertex +"\t=\t"+ adjacencyMatrix[parent[x]][vertex]);
+            		System.out.println(x + "\t:\t" + vertex +"\t=\t"+ adjacencyMatrix[x][vertex]);
             		count++;
             	}
         	}
