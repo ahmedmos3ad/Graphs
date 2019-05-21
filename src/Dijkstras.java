@@ -22,26 +22,37 @@ public class Dijkstras
     public void dijkstra_algorithm(int adjacency_matrix[][], int source)
     {
         int evaluationNode;
+        //copy adjaceny matrix given by user
         for (int i = 1; i <= number_of_nodes; i++)
             for (int j = 1; j <= number_of_nodes; j++)
                 adjacencyMatrix[i][j] = adjacency_matrix[i][j];
  
+        //initialize all nodes distances to infinity
         for (int i = 1; i <= number_of_nodes; i++)
         {
             getDistances()[i] = Integer.MAX_VALUE;
         }
  
+        //add starting vetex to the unvisited list
         unsettled.add(source);
+        //set starting vertex distance to 0
         getDistances()[source] = 0;
+        //while there are still unvisited nodes
         while (!unsettled.isEmpty())
         {
-            evaluationNode = getNodeWithMinimumDistanceFromUnsettled();
-            unsettled.remove(evaluationNode);
-            settled.add(evaluationNode);
-            evaluateNeighbours(evaluationNode);
+            //Visit the edges leaving from source node and choose the one with lowest distance
+        	evaluationNode = getNodeWithMinimumDistanceFromUnsettled();
+            //remove the chosen node from the unvisited list
+        	//as we know the lowest distance to visit it from source 
+        	unsettled.remove(evaluationNode);
+            //add the chosen node to the visited list
+        	settled.add(evaluationNode);
+            //visit the neighbours of the new chosen node and check their distance now from Source and chose lowest and repeat
+        	evaluateNeighbours(evaluationNode);
         }
     }
  
+    /** check for the minimum distance from source to unsettled nodes **/
     private int getNodeWithMinimumDistanceFromUnsettled()
     {
         int min;
@@ -50,11 +61,12 @@ public class Dijkstras
         Iterator<Integer> iterator = unsettled.iterator();
         node = iterator.next();
         min = getDistances()[node];
+        //check for the lowest distance to reach the next unvisited node
         for (int i = 1; i <= getDistances().length; i++)
         {
             if (unsettled.contains(i))
             {
-                if (getDistances()[i] <= min)
+            	if (getDistances()[i] <= min)
                 {
                     min = getDistances()[i];
                     node = i;
@@ -73,9 +85,11 @@ public class Dijkstras
         {
             if (!settled.contains(destinationNode))
             {
-                if (adjacencyMatrix[evaluationNode][destinationNode] != Integer.MAX_VALUE)
+                //if there is a path between the 2 nodes
+            	if (adjacencyMatrix[evaluationNode][destinationNode] != Integer.MAX_VALUE)
                 {
-                    edgeDistance = adjacencyMatrix[evaluationNode][destinationNode];
+                    //set edgeDistance to current weight
+            		edgeDistance = adjacencyMatrix[evaluationNode][destinationNode];
                     newDistance = getDistances()[evaluationNode] + edgeDistance;
                     if (newDistance < getDistances()[destinationNode])
                     {

@@ -52,7 +52,7 @@ public class Main {
                                              {0, 2, 1, 0, 7, 5, 0, 0},
                                              {0, 0, 0, 2, 0, 1, 0, 0}}; 
 
-	            System.out.println("Enter the source ");
+	            System.out.println("Enter the source(0~Number of vertices-1) ");
 	            source = scan.nextInt();
 	            Prims prims = new Prims(number_of_vertices,source);
 	            prims.primMST(graph);
@@ -89,7 +89,7 @@ public class Main {
 	                   }
 	               }
 	    
-	               System.out.println("Enter the source ");
+	               System.out.println("Enter the source(1~Number of vertices) ");
 	               source = scan.nextInt(); 
 	               Dijkstras dijkstrasAlgorithm = new Dijkstras(
 	                       number_of_vertices);
